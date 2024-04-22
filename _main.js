@@ -31,7 +31,7 @@ async function main() {
           const IMAGES = [...ph_other, ...ph_draws, ...ph_yt, ...ph_catalogs];
 
           const photos = IMAGES.map((e) => {
-            return `https://ooodepa.github.io/images-temp/raw/${currentModel}/${e}`;
+            return `https://ooodepa.github.io/nomenclature-images-raw/raw/${currentModel}/${e}`;
           });
           const id = currentItem.dp_id;
           arr.push({
