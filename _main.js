@@ -51,6 +51,7 @@ async function main() {
     }
 
     await fs.promises.writeFile("result.json", JSON.stringify(arr, null, 2));
+    await fs.promises.writeFile("result.min.json", JSON.stringify(arr));
   } catch (exception) {
     console.log(exception);
   }
