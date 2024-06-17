@@ -12,6 +12,7 @@ async function main() {
     const path = "./raw";
     const models = await listFilesInDirectory(path);
     const arr = [];
+    const arr2 = [];
     for (let i = 0; i < models.length; ++i) {
       const currentModel = models[i];
       for (let j = 0; j < items.length; ++j) {
@@ -34,7 +35,7 @@ async function main() {
             return `https://ooodepa.github.io/nomenclature-images-raw/raw/${currentModel}/${e}`;
           });
           const id = currentItem.dp_id;
-          arr.push({
+          const obj = {
             ...currentItem,
             dp_itemGalery: photos.slice(1).map((e) => {
               return {
@@ -45,13 +46,25 @@ async function main() {
             }),
             dp_photoUrl: photos[0],
             dp_photos: photos.join("\n"),
-          });
+          };
+          arr.push(obj);
+
+          if (JSON.stringify(obj.dp_photos).localeCompare(JSON.stringify(currentItem.dp_photos)) !== 0) {
+            arr2.push({
+              dp_id: obj.dp_id,
+              dp_photos: obj.dp_photos,
+              dp_photoUrl: obj.dp_photoUrl,
+              dp_itemGalery: obj.dp_itemGalery,
+            });
+          }
         }
       }
     }
 
     await fs.promises.writeFile("result.json", JSON.stringify(arr, null, 2));
     await fs.promises.writeFile("result.min.json", JSON.stringify(arr));
+    await fs.promises.writeFile("result2.json", JSON.stringify(arr2, null, 2));
+    await fs.promises.writeFile("result2.min.json", JSON.stringify(arr2));
   } catch (exception) {
     console.log(exception);
   }
